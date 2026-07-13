@@ -1,4 +1,4 @@
-import { cp, rm } from "node:fs/promises";
+import { cp, mkdir, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -12,3 +12,25 @@ if (!existsSync(outDir)) {
 
 await rm(distDir, { recursive: true, force: true });
 await cp(outDir, distDir, { recursive: true });
+
+await mkdir(path.join(distDir, ".openai"), { recursive: true });
+await cp(path.join(root, ".openai", "hosting.json"), path.join(distDir, ".openai", "hosting.json"));
+
+await mkdir(path.join(distDir, "server"), { recursive: true });
+await writeFile(
+  path.join(distDir, "server", "index.js"),
+  `export default {
+  async fetch(request, env) {
+    const response = await env.ASSETS.fetch(request);
+    const url = new URL(request.url);
+
+    if (response.status === 404 && !url.pathname.includes(".")) {
+      return env.ASSETS.fetch(new Request(new URL("/", url), request));
+    }
+
+    return response;
+  }
+};
+`,
+  "utf8",
+);
