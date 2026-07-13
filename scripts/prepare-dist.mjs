@@ -12,6 +12,7 @@ if (!existsSync(outDir)) {
 
 await rm(distDir, { recursive: true, force: true });
 await cp(outDir, distDir, { recursive: true });
+await cp(outDir, path.join(distDir, "client"), { recursive: true });
 
 await mkdir(path.join(distDir, ".openai"), { recursive: true });
 await cp(path.join(root, ".openai", "hosting.json"), path.join(distDir, ".openai", "hosting.json"));
