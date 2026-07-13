@@ -5,15 +5,39 @@ import {
   ArrowRight,
   BarChart3,
   BrainCircuit,
+  Briefcase,
+  Code2,
+  Database,
   Download,
   ExternalLink,
   FileText,
+  Globe2,
+  Home as HomeIcon,
+  Languages,
   Mail,
   Plane,
-  Sparkles
+  Rocket,
+  Target,
+  TrendingUp,
+  Trophy,
+  Utensils,
+  Wallet,
+  Wrench
 } from "lucide-react";
 
 const projects = [
+  {
+    slug: "home-capital-studio",
+    title: "Home Capital Studio - personal finance simulator",
+    category: "Finance & Decision Tools",
+    filter: "Finance",
+    summary:
+      "Interactive finance application to compare investing, buying a home and buying a rental property, with compound interest, cash-flow, DTI, probability scenarios and portfolio allocation diagnostics.",
+    image: "/assets/projects/home-capital-studio.jpg",
+    app: "/finance-app/index.html",
+    tools: ["React", "TypeScript", "Vite", "Scenario modelling", "Compound interest"],
+    featured: true
+  },
   {
     slug: "lung-cancer-data-science",
     title: "Data science: pulmonary nodule classification",
@@ -120,30 +144,96 @@ const projects = [
   }
 ];
 
-const filters = ["All", "Data & ML", "Aerospace", "Computation", "Strategy"];
+const filters = ["All", "Finance", "Data & ML", "Aerospace", "Computation", "Strategy"];
 
 const skillGroups = [
   {
     title: "Data & ML",
     icon: BrainCircuit,
-    items: ["Python", "Jupyter", "pandas", "numpy", "scikit-learn", "ML pipelines"]
+    items: ["Python", "Jupyter", "pandas", "numpy", "scikit-learn", "PCA", "MLP/CNN", "ML pipelines"]
+  },
+  {
+    title: "Programming & Tools",
+    icon: Code2,
+    items: ["MATLAB", "React", "TypeScript", "Excel models", "Git", "Local web apps", "Automation"]
   },
   {
     title: "Aerospace Engineering",
     icon: Plane,
-    items: ["Aerodynamics", "Aerospace systems", "CATIA V5", "STAR-CCM+", "ANSYS"]
+    items: ["Aerodynamics", "Aerospace systems", "CATIA V5", "STAR-CCM+", "ANSYS", "Turbomachinery"]
   },
   {
-    title: "Computation",
+    title: "Numerical & Scientific Computing",
     icon: BarChart3,
-    items: ["MATLAB", "Numerical methods", "Finite differences", "Modal analysis", "LaTeX"]
+    items: ["Finite differences", "Modal analysis", "Eigenvalues", "Variational methods", "Optical flow", "LaTeX"]
+  },
+  {
+    title: "Finance & Decision Models",
+    icon: TrendingUp,
+    items: ["Compound interest", "Scenario analysis", "Cash-flow", "Portfolio allocation", "Real-estate ratios"]
+  },
+  {
+    title: "Languages & Strengths",
+    icon: Languages,
+    items: [
+      "Spanish native",
+      "French native",
+      "English advanced",
+      "Italian intermediate",
+      "Analytical thinking",
+      "Autonomous",
+      "Multicultural"
+    ]
+  }
+];
+
+const interestAreas = [
+  {
+    title: "Finance & Markets",
+    icon: Wallet,
+    text:
+      "I follow financial markets through research and I build tools to understand capital, risk, cash-flow and long-term decisions.",
+    link: "/finance-app/index.html",
+    linkText: "Open finance app"
+  },
+  {
+    title: "Machine Learning",
+    icon: Database,
+    text:
+      "I like applying ML where the output is useful: ranking priorities, classifying medical imaging data or turning noisy inputs into decisions."
+  },
+  {
+    title: "Aeronautics & Space",
+    icon: Rocket,
+    text:
+      "Aerospace is the technical world that drives me: aerodynamics, propulsion, systems, missions and the precision needed to make things work."
+  },
+  {
+    title: "Cooking",
+    icon: Utensils,
+    text:
+      "Cooking keeps me close to craft: timing, iteration, taste and the habit of improving a process by paying attention."
+  },
+  {
+    title: "Tennis & Football",
+    icon: Trophy,
+    text:
+      "Sport gives me rhythm, pressure management and team reflexes, especially when the situation changes quickly."
+  },
+  {
+    title: "Travel & Multicultural Work",
+    icon: Globe2,
+    text:
+      "Growing between Spain, France and international environments makes me comfortable adapting, listening and working across cultures."
   }
 ];
 
 function ProjectCard({ project, compact = false }) {
+  const primaryHref = project.app || project.pdf || project.html || "#";
+
   return (
     <article className={`project-card ${compact ? "compact" : ""}`}>
-      <a className="project-image" href={project.pdf} target="_blank" rel="noreferrer">
+      <a className="project-image" href={primaryHref} target="_blank" rel="noreferrer">
         <img src={project.image} alt={`${project.title} preview`} loading="lazy" />
       </a>
       <div className="project-content">
@@ -156,10 +246,18 @@ function ProjectCard({ project, compact = false }) {
           ))}
         </div>
         <div className="project-actions">
-          <a href={project.pdf} target="_blank" rel="noreferrer">
-            <FileText size={16} aria-hidden="true" />
-            PDF
-          </a>
+          {project.app ? (
+            <a href={project.app} target="_blank" rel="noreferrer">
+              <ExternalLink size={16} aria-hidden="true" />
+              Live app
+            </a>
+          ) : null}
+          {project.pdf ? (
+            <a href={project.pdf} target="_blank" rel="noreferrer">
+              <FileText size={16} aria-hidden="true" />
+              PDF
+            </a>
+          ) : null}
           {project.html ? (
             <a href={project.html} target="_blank" rel="noreferrer">
               <ExternalLink size={16} aria-hidden="true" />
@@ -190,7 +288,9 @@ export default function Home() {
         </a>
         <nav aria-label="Main navigation">
           <a href="#about">About</a>
+          <a href="#skills">Skills</a>
           <a href="#experience">Experience</a>
+          <a href="#interests">Interests</a>
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -198,17 +298,22 @@ export default function Home() {
 
       <section className="hero" id="top">
         <div className="hero-copy">
-          <p className="eyebrow">Aerospace engineering + data science</p>
+          <p className="eyebrow">Final-year Master entry | Aerospace, data science & finance</p>
           <h1>Juan Tixeront</h1>
           <p className="hero-lede">
-            Franco-Spanish aeronautical engineering student at IPSA Toulouse, focused on
-            aerospace systems, numerical methods and machine learning projects that turn
-            technical analysis into usable decisions.
+            Franco-Spanish aeronautical engineering student at IPSA Toulouse, entering
+            the final year of my Master and ready to get fully involved in professional
+            life. I connect aerospace systems, numerical methods, machine learning and
+            finance-minded decision tools.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="#projects">
               View projects
               <ArrowRight size={17} aria-hidden="true" />
+            </a>
+            <a className="button secondary" href="/finance-app/index.html" target="_blank" rel="noreferrer">
+              Finance app
+              <ExternalLink size={17} aria-hidden="true" />
             </a>
             <a className="button secondary" href="/assets/downloads/cv-juan-tixeront.pdf" target="_blank" rel="noreferrer">
               Download CV
@@ -216,21 +321,22 @@ export default function Home() {
             </a>
           </div>
           <div className="hero-metrics" aria-label="Quick profile facts">
-            <span>4th year at IPSA Toulouse</span>
-            <span>Python, MATLAB, CATIA V5</span>
+            <span>Final-year Master path</span>
+            <span>Ready for professional impact</span>
+            <span>Aerospace + Data + Finance</span>
             <span>Spanish, French, English, Italian</span>
           </div>
         </div>
 
         <div className="hero-visual" aria-label="Portrait and focus areas">
-          <img className="portrait" src="/assets/juan-tixeront-photo.jpg" alt="Juan Tixeront portrait" />
+          <img className="portrait intro-photo" src="/assets/juan-tixeront-intro.jpg" alt="Juan Tixeront portrait" />
           <div className="focus-panel">
             <span>
-              <Sparkles size={17} aria-hidden="true" />
-              Current focus
+              <Briefcase size={17} aria-hidden="true" />
+              Professional direction
             </span>
-            <strong>Data science for engineering problems</strong>
-            <p>ML, numerical modelling, aerodynamics and systems thinking.</p>
+            <strong>Ready to contribute in engineering, data and decision-making roles</strong>
+            <p>Curious, analytical and practical: I like building things that can be used.</p>
           </div>
         </div>
       </section>
@@ -238,28 +344,29 @@ export default function Home() {
       <section className="section intro-grid" id="about">
         <div>
           <p className="eyebrow">About</p>
-          <h2>Analytical, practical and comfortable between cultures.</h2>
+          <h2>Analytical, practical and ready for the next professional step.</h2>
         </div>
         <div className="intro-copy">
           <p>
             I like work that forces me to connect theory with something concrete: a
-            simulation, a model, a repair workflow, a report, a design choice. Aerospace
-            gives me the physical systems; data science gives me the tools to extract
-            patterns, rank priorities and make decisions clearer.
+            simulation, a model, a repair workflow, a report, a design choice or a tool
+            that helps someone decide. Aerospace gives me the physical systems; data
+            science gives me the methods; finance gives me another field where modelling,
+            risk and clarity matter.
           </p>
           <p>
             Outside the technical side, I bring a multicultural mindset and a hands-on
             attitude shaped by experiences in Madrid, Toulouse, Amsterdam and Ibiza.
-            I cook, play tennis and football, and follow financial markets through
-            research articles.
+            I am autonomous, adaptable and motivated by international environments where
+            people need both precision and initiative.
           </p>
         </div>
       </section>
 
-      <section className="section skills-section">
+      <section className="section skills-section" id="skills">
         <div className="section-heading">
           <p className="eyebrow">Skills</p>
-          <h2>Where I am building depth</h2>
+          <h2>A technical profile built across engineering, data and decision tools</h2>
         </div>
         <div className="skills-grid">
           {skillGroups.map(({ title, icon: Icon, items }) => (
@@ -276,6 +383,24 @@ export default function Home() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section className="readiness-band">
+        <article>
+          <Wrench size={24} aria-hidden="true" />
+          <span>Hands-on engineering</span>
+          <p>CAD, simulation, repair workflows, reports and technical problem solving.</p>
+        </article>
+        <article>
+          <Target size={24} aria-hidden="true" />
+          <span>Decision mindset</span>
+          <p>Models, metrics, scenario comparison and clear recommendations.</p>
+        </article>
+        <article>
+          <HomeIcon size={24} aria-hidden="true" />
+          <span>Professional readiness</span>
+          <p>Entering my final Master year and prepared to contribute in real teams.</p>
+        </article>
       </section>
 
       <section className="section experience" id="experience">
@@ -315,6 +440,36 @@ export default function Home() {
               </p>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section className="section interests-section" id="interests">
+        <div className="section-heading split">
+          <div>
+            <p className="eyebrow">Centers of interest</p>
+            <h2>What keeps me curious outside the classroom</h2>
+          </div>
+          <a className="text-link" href="/finance-app/index.html" target="_blank" rel="noreferrer">
+            Finance app
+            <ExternalLink size={16} aria-hidden="true" />
+          </a>
+        </div>
+        <div className="interest-grid">
+          {interestAreas.map(({ title, icon: Icon, text, link, linkText }) => (
+            <article className="interest-card" key={title}>
+              <div className="interest-icon">
+                <Icon size={22} aria-hidden="true" />
+              </div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+              {link ? (
+                <a href={link} target="_blank" rel="noreferrer">
+                  {linkText}
+                  <ArrowRight size={15} aria-hidden="true" />
+                </a>
+              ) : null}
+            </article>
+          ))}
         </div>
       </section>
 
@@ -365,12 +520,16 @@ export default function Home() {
       <section className="contact" id="contact">
         <div>
           <p className="eyebrow">Contact</p>
-          <h2>Available for internships, engineering projects and data-driven aerospace work.</h2>
+          <h2>Entering my final Master year and ready to get involved in professional life.</h2>
         </div>
         <div className="contact-actions">
           <a className="button primary" href="mailto:jeantixeront@gmail.com">
             <Mail size={17} aria-hidden="true" />
             Email me
+          </a>
+          <a className="button secondary" href="/finance-app/index.html" target="_blank" rel="noreferrer">
+            <ExternalLink size={17} aria-hidden="true" />
+            Finance app
           </a>
           <a
             className="button secondary"

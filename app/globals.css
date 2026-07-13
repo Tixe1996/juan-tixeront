@@ -84,7 +84,7 @@ nav a:hover,
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.75fr);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
   gap: clamp(28px, 5vw, 80px);
   align-items: center;
   min-height: calc(100svh - 72px);
@@ -212,12 +212,18 @@ h3 {
 }
 
 .portrait {
-  width: min(100%, 430px);
+  width: min(100%, 570px);
   height: min(72svh, 620px);
   min-height: 430px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--radius);
+  background: #fff;
   box-shadow: var(--shadow);
+}
+
+.intro-photo {
+  object-fit: cover;
+  object-position: center;
 }
 
 .focus-panel {
@@ -323,6 +329,37 @@ h3 {
   color: var(--teal);
 }
 
+.readiness-band {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border-block: 1px solid var(--line);
+}
+
+.readiness-band article {
+  min-height: 180px;
+  padding: clamp(22px, 4vw, 42px);
+  background: #fff;
+}
+
+.readiness-band svg {
+  color: var(--blue);
+}
+
+.readiness-band span {
+  display: block;
+  margin-top: 16px;
+  font-size: 1.15rem;
+  font-weight: 850;
+}
+
+.readiness-band p {
+  max-width: 430px;
+  margin: 9px 0 0;
+  color: var(--muted);
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -379,6 +416,53 @@ h3 {
 
 .featured {
   background: #fff;
+}
+
+.interests-section {
+  background: var(--paper);
+}
+
+.interest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.interest-card {
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.interest-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  background: #eef8f7;
+  border: 1px solid #cbe7e3;
+  border-radius: var(--radius);
+  color: var(--teal);
+}
+
+.interest-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.interest-card a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  color: var(--teal);
+  font-weight: 850;
 }
 
 .featured-grid {
@@ -520,8 +604,13 @@ h3 {
   }
 
   .skills-grid,
-  .library-grid {
+  .library-grid,
+  .interest-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .readiness-band {
+    grid-template-columns: 1fr;
   }
 
   .featured-grid {
@@ -559,7 +648,7 @@ h3 {
 
   .portrait {
     width: 100%;
-    height: 450px;
+    height: auto;
     min-height: 0;
   }
 
@@ -588,7 +677,8 @@ h3 {
   }
 
   .skills-grid,
-  .library-grid {
+  .library-grid,
+  .interest-grid {
     grid-template-columns: 1fr;
   }
 
