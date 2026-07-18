@@ -11,6 +11,7 @@ if (!existsSync(outDir)) {
 }
 
 await rm(distDir, { recursive: true, force: true });
+await writeFile(path.join(outDir, ".nojekyll"), "", "utf8");
 await cp(outDir, distDir, { recursive: true });
 await cp(outDir, path.join(distDir, "client"), { recursive: true });
 

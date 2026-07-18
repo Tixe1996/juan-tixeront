@@ -25,6 +25,14 @@ import {
   Wrench
 } from "lucide-react";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+function sitePath(path) {
+  if (!path || path === "#") return path || "#";
+  if (path.startsWith("http") || path.startsWith("mailto:") || path.startsWith("#")) return path;
+  return `${basePath}${path}`;
+}
+
 const projects = [
   {
     slug: "home-capital-studio",
@@ -229,12 +237,12 @@ const interestAreas = [
 ];
 
 function ProjectCard({ project, compact = false }) {
-  const primaryHref = project.app || project.pdf || project.html || "#";
+  const primaryHref = sitePath(project.app || project.pdf || project.html || "#");
 
   return (
     <article className={`project-card ${compact ? "compact" : ""}`}>
       <a className="project-image" href={primaryHref} target="_blank" rel="noreferrer">
-        <img src={project.image} alt={`${project.title} preview`} loading="lazy" />
+        <img src={sitePath(project.image)} alt={`${project.title} preview`} loading="lazy" />
       </a>
       <div className="project-content">
         <p className="eyebrow">{project.category}</p>
@@ -247,19 +255,19 @@ function ProjectCard({ project, compact = false }) {
         </div>
         <div className="project-actions">
           {project.app ? (
-            <a href={project.app} target="_blank" rel="noreferrer">
+            <a href={sitePath(project.app)} target="_blank" rel="noreferrer">
               <ExternalLink size={16} aria-hidden="true" />
               Live app
             </a>
           ) : null}
           {project.pdf ? (
-            <a href={project.pdf} target="_blank" rel="noreferrer">
+            <a href={sitePath(project.pdf)} target="_blank" rel="noreferrer">
               <FileText size={16} aria-hidden="true" />
               PDF
             </a>
           ) : null}
           {project.html ? (
-            <a href={project.html} target="_blank" rel="noreferrer">
+            <a href={sitePath(project.html)} target="_blank" rel="noreferrer">
               <ExternalLink size={16} aria-hidden="true" />
               Notebook
             </a>
@@ -311,11 +319,11 @@ export default function Home() {
               View projects
               <ArrowRight size={17} aria-hidden="true" />
             </a>
-            <a className="button secondary" href="/finance-app/index.html" target="_blank" rel="noreferrer">
+            <a className="button secondary" href={sitePath("/finance-app/index.html")} target="_blank" rel="noreferrer">
               Finance app
               <ExternalLink size={17} aria-hidden="true" />
             </a>
-            <a className="button secondary" href="/assets/downloads/cv-juan-tixeront.pdf" target="_blank" rel="noreferrer">
+            <a className="button secondary" href={sitePath("/assets/downloads/cv-juan-tixeront.pdf")} target="_blank" rel="noreferrer">
               Download CV
               <Download size={17} aria-hidden="true" />
             </a>
@@ -329,7 +337,7 @@ export default function Home() {
         </div>
 
         <div className="hero-visual" aria-label="Portrait and focus areas">
-          <img className="portrait intro-photo" src="/assets/juan-tixeront-intro.jpg" alt="Juan Tixeront portrait" />
+          <img className="portrait intro-photo" src={sitePath("/assets/juan-tixeront-intro.jpg")} alt="Juan Tixeront portrait" />
           <div className="focus-panel">
             <span>
               <Briefcase size={17} aria-hidden="true" />
@@ -449,7 +457,7 @@ export default function Home() {
             <p className="eyebrow">Centers of interest</p>
             <h2>What keeps me curious outside the classroom</h2>
           </div>
-          <a className="text-link" href="/finance-app/index.html" target="_blank" rel="noreferrer">
+          <a className="text-link" href={sitePath("/finance-app/index.html")} target="_blank" rel="noreferrer">
             Finance app
             <ExternalLink size={16} aria-hidden="true" />
           </a>
@@ -463,7 +471,7 @@ export default function Home() {
               <h3>{title}</h3>
               <p>{text}</p>
               {link ? (
-                <a href={link} target="_blank" rel="noreferrer">
+                <a href={sitePath(link)} target="_blank" rel="noreferrer">
                   {linkText}
                   <ArrowRight size={15} aria-hidden="true" />
                 </a>
@@ -527,7 +535,7 @@ export default function Home() {
             <Mail size={17} aria-hidden="true" />
             Email me
           </a>
-          <a className="button secondary" href="/finance-app/index.html" target="_blank" rel="noreferrer">
+          <a className="button secondary" href={sitePath("/finance-app/index.html")} target="_blank" rel="noreferrer">
             <ExternalLink size={17} aria-hidden="true" />
             Finance app
           </a>
@@ -540,7 +548,7 @@ export default function Home() {
             <ExternalLink size={17} aria-hidden="true" />
             LinkedIn
           </a>
-          <a className="button secondary" href="/assets/downloads/cv-juan-tixeront.pdf" target="_blank" rel="noreferrer">
+          <a className="button secondary" href={sitePath("/assets/downloads/cv-juan-tixeront.pdf")} target="_blank" rel="noreferrer">
             <Download size={17} aria-hidden="true" />
             CV
           </a>
