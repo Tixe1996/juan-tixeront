@@ -1,15 +1,36 @@
 import "./globals.css";
+import SiteFrame from "./components/site-frame";
 
 export const metadata = {
-  title: "Juan Tixeront | Aerospace & Data Science Portfolio",
+  metadataBase: new URL("https://tixe1996.github.io/juan-tixeront/"),
+  title: {
+    default: "Juan Tixeront | Engineering, Finance & Aviation",
+    template: "%s | Juan Tixeront",
+  },
   description:
-    "Portfolio of Juan Tixeront, an aeronautical engineering student focused on aerospace systems, numerical methods and data science."
+    "Franco-Spanish aeronautical engineering student at IPSA, with experience at PLD Space. Explore projects, experience and ambitions in finance, aviation and client-facing roles.",
+  openGraph: {
+    title: "Juan Tixeront | Engineering, Finance & Aviation",
+    description:
+      "Engineering precision. Commercial curiosity. Experience, projects and an international perspective.",
+    type: "website",
+    images: [
+      {
+        url: "https://tixe1996.github.io/juan-tixeront/assets/juan-tixeront-portrait.webp",
+        width: 1536,
+        height: 1024,
+        alt: "Juan Tixeront",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SiteFrame>{children}</SiteFrame>
+      </body>
     </html>
   );
 }
