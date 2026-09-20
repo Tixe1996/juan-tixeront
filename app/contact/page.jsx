@@ -13,11 +13,12 @@ export default function Contact() {
       <PageIntro
         number="04"
         eyebrow="Contact"
-        title="A good conversation"
-        emphasis="can open a new chapter."
+        title="Get in touch."
+        emphasis="Let’s explore the opportunity."
       >
-        Interested in an analytical profile with a technical foundation and a
-        people-facing ambition? Let’s talk.
+        Available for a six-month final-year internship from January 2027. I
+        welcome conversations about analytical, commercial and client-facing
+        roles.
       </PageIntro>
       <section className="contact-layout wrap">
         <ContactOptions />

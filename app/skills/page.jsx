@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "../components/transition-link";
 import {
   ArrowUpRight,
   BrainCircuit,
@@ -34,7 +34,7 @@ export default function Skills() {
         emphasis="Commercial relevance."
       >
         A toolkit built through engineering studies, practical projects and
-        international work. With the curiosity to keep connecting disciplines.
+        international work, with examples of how I use each skill.
       </PageIntro>
       <section className="wrap skill-grid">
         {skills.map((group, index) => {

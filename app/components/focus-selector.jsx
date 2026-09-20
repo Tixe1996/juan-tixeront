@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "./transition-link";
 import { useState } from "react";
 import {
   ArrowUpRight,
@@ -12,8 +12,8 @@ const directions = [
   {
     label: "Banking & finance",
     Icon: ChartNoAxesCombined,
-    title: "A quantitative foundation. A people-facing ambition.",
-    text: "I’m interested in front-office roles where analytical rigour supports clear financial conversations, particularly in corporate finance and financial markets. My starting point: engineering, Python and scenario modelling.",
+    title: "Turning analysis into informed decisions.",
+    text: "Engineering has taught me to test assumptions and explain complex ideas clearly. I want to apply that discipline in finance, combining quantitative work with an understanding of clients and their objectives.",
     detail:
       "Home Capital Studio: an interactive application comparing investing, property and long-term capital decisions.",
     href: "/projects/home-capital-studio/",
@@ -67,15 +67,15 @@ export default function FocusSelector() {
             <span className="section-number">01</span>Professional direction
           </p>
           <h2>
-            Where I want to make
+            An engineering background.
             <br />
-            <em>a difference.</em>
+            <em>A business perspective.</em>
           </h2>
         </div>
         <p className="section-aside">
-          Three directions.
+          Analytical thinking.
           <br />
-          One solid engineering foundation.
+          An international outlook.
         </p>
       </div>
       <div

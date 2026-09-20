@@ -1,8 +1,9 @@
-import Link from "next/link";
+import Link from "../../components/transition-link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { asset, projects } from "../../lib/content";
 import { ContactBand, ProjectResources, Tags } from "../../components/shared";
+import ImageStudy from "../../components/image-study";
 export function generateStaticParams() {
   return projects.map(({ slug }) => ({ slug }));
 }
@@ -150,7 +151,8 @@ export default async function ProjectDetail({ params }) {
           <ProjectResources project={project} />
         </header>
         <div
-          className={`detail-visual ${slug === "lung-cancer-data-science" ? "chart-visual" : ""}`}
+          className={`detail-visual ${slug === "lung-cancer-data-science" ? "chart-visual" : ""} ${slug === "aerobox" ? "aerobox-visual" : ""} ${project.source ? "image-math-visual" : ""}`}
+          style={{ viewTransitionName: `project-${project.slug}` }}
         >
           <img
             src={asset(project.image)}
@@ -159,6 +161,17 @@ export default async function ProjectDetail({ params }) {
             height={760}
           />
         </div>
+        {project.metrics && (
+          <div className="project-metrics">
+            {project.metrics.map((metric) => (
+              <div key={metric.label}>
+                <strong>{metric.value}</strong>
+                <span>{metric.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {slug === "image-diffusion-numerical-methods" && <ImageStudy />}
         <div className="project-body">
           <aside className="project-meta">
             <p className="eyebrow">Project context</p>
@@ -184,8 +197,116 @@ export default async function ProjectDetail({ params }) {
               </ul>
             </section>
             {slug === "lung-cancer-data-science" && <CancerStudy />}
+            {slug === "aerobox" && (
+              <section className="aerobox-story" data-reveal>
+                <p className="eyebrow">From requirement to design</p>
+                <h2>A configurable product, not just a 3D model.</h2>
+                <p>
+                  The configuration matrix combines two arm lengths (0.30 and
+                  0.50 m), four blade counts and two material families. These
+                  are design variants for comparison, not measured
+                  flight-performance results.
+                </p>
+                <div className="case-steps">
+                  <article>
+                    <span>01</span>
+                    <div>
+                      <h3>Define the mission</h3>
+                      <p>
+                        Payload protection, access to electronics and
+                        maintenance influence the architecture from the outset.
+                      </p>
+                    </div>
+                  </article>
+                  <article>
+                    <span>02</span>
+                    <div>
+                      <h3>Connect the parameters</h3>
+                      <p>
+                        Arm length, propellers, connectors and protective
+                        elements change within a common CATIA assembly.
+                      </p>
+                    </div>
+                  </article>
+                  <article>
+                    <span>03</span>
+                    <div>
+                      <h3>Plan manufacture and sourcing</h3>
+                      <p>
+                        The bill of materials distinguishes machined and printed
+                        parts from bought-in electrical components. Propeller
+                        drawings are a defined subcontracted contribution.
+                      </p>
+                    </div>
+                  </article>
+                  <article>
+                    <span>04</span>
+                    <div>
+                      <h3>Identify the validation gaps</h3>
+                      <p>
+                        Assembly clearances, material assignment, mass, centre
+                        of gravity and propeller balancing must be verified
+                        before flight testing.
+                      </p>
+                    </div>
+                  </article>
+                </div>
+                <a
+                  className="text-link"
+                  href={asset(project.supportingPdf)}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Original manufacturing report <ArrowRight size={17} />
+                </a>
+              </section>
+            )}
+            {slug === "push-quest" && (
+              <section data-reveal>
+                <p className="eyebrow">Two editions, different scope</p>
+                <h2>Make the signal useful. Keep the claims honest.</h2>
+                <div className="case-steps">
+                  <article>
+                    <span>01</span>
+                    <div>
+                      <h3>Desktop research</h3>
+                      <p>
+                        The documented V31 release retains the Python movement
+                        engine, session preparation, coaching and identity
+                        checks. Its 94 application tests and 56 inherited tests
+                        check software behaviour, not a universal accuracy rate.
+                      </p>
+                    </div>
+                  </article>
+                  <article>
+                    <span>02</span>
+                    <div>
+                      <h3>A browser experience</h3>
+                      <p>
+                        MediaPipe estimates body landmarks locally. A smaller
+                        state machine checks visibility, a stable plank and a
+                        complete movement cycle. Processing runs in a worker to
+                        keep the controls responsive.
+                      </p>
+                    </div>
+                  </article>
+                  <article>
+                    <span>03</span>
+                    <div>
+                      <h3>Known limitations</h3>
+                      <p>
+                        Occlusion, perspective and rapid movement can cause
+                        missed or incorrect counts. The browser counter is not
+                        the desktop form classifier and does not establish
+                        identity or certify exercise technique.
+                      </p>
+                    </div>
+                  </article>
+                </div>
+              </section>
+            )}
             <section data-reveal>
-              <p className="eyebrow">What I take from it</p>
+              <p className="eyebrow">What I learned</p>
               <p className="takeaway">{project.takeaway}</p>
             </section>
             {project.note && <p className="project-note">{project.note}</p>}

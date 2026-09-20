@@ -1,5 +1,6 @@
 import "./globals.css";
 import SiteFrame from "./components/site-frame";
+import { TransitionProvider } from "./components/transition-link";
 
 export const metadata = {
   metadataBase: new URL("https://tixe1996.github.io/juan-tixeront/"),
@@ -29,7 +30,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <SiteFrame>{children}</SiteFrame>
+        <TransitionProvider>
+          <SiteFrame>{children}</SiteFrame>
+        </TransitionProvider>
       </body>
     </html>
   );

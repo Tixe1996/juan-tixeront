@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { asset, education, experiences, profile } from "../lib/content";
 import { ContactBand, PageIntro, Tags } from "../components/shared";
+import Link from "../components/transition-link";
 
 export const metadata = {
   title: "Experience",
@@ -23,8 +24,8 @@ export default function Experience() {
       <PageIntro
         number="01"
         eyebrow="Experience & education"
-        title="An engineer’s rigour."
-        emphasis="A wider perspective."
+        title="Experience"
+        emphasis="Technical work. Human connections."
       >
         From launcher components and supplier coordination to customer service.
         Each experience adds a different way of understanding people, products
@@ -66,7 +67,14 @@ export default function Experience() {
                   </span>
                 )}
               </div>
-              <h2>{item.company}</h2>
+              <h2>
+                <Link
+                  href={`/experience/${item.slug}/`}
+                  style={{ viewTransitionName: `experience-${item.slug}` }}
+                >
+                  {item.company}
+                </Link>
+              </h2>
               <h3>{item.role}</h3>
               <p className="location">
                 <MapPin size={14} />
@@ -79,10 +87,16 @@ export default function Experience() {
                 ))}
               </ul>
               <div className="relevance">
-                <span>Commercial perspective</span>
-                <p>{item.relevance}</p>
+                <span>Key contribution</span>
+                <p>{item.output}</p>
               </div>
               <Tags items={item.tags} />
+              <Link
+                className="text-link experience-link"
+                href={`/experience/${item.slug}/`}
+              >
+                View experience <ArrowUpRight size={17} />
+              </Link>
             </article>
           ))}
         </div>

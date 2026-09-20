@@ -1,10 +1,11 @@
-import Link from "next/link";
+import Link from "./components/transition-link";
 import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
   Download,
   Globe2,
+  CalendarDays,
 } from "lucide-react";
 import { asset, profile, projects } from "./lib/content";
 import { ContactBand, ProjectCard } from "./components/shared";
@@ -26,7 +27,7 @@ export default function Home() {
           <div className="hero-copy">
             <p className="eyebrow hero-eyebrow">
               <span className="status-dot" />
-              Engineering background. Commercial ambition.
+              Engineering · Analysis · Business
             </p>
             <h1>
               Juan
@@ -36,17 +37,22 @@ export default function Home() {
               </em>
             </h1>
             <p className="hero-tagline">
-              Analytical by training.
-              <br />
-              People-focused by nature.
+              An analytical mind.
+              <br />A people-first approach.
             </p>
             <p className="hero-lede">
-              Franco-Spanish aeronautical engineering student, building a path
-              into finance, aviation and client-facing business.
+              Franco-Spanish aeronautical engineering student bringing technical
+              insight to business decisions and client relationships.
             </p>
+            <div className="hero-availability">
+              <CalendarDays size={17} aria-hidden="true" />
+              <span>
+                <strong>January 2027</strong> · Six-month final-year internship
+              </span>
+            </div>
             <div className="button-row">
               <Link className="button primary" href="/experience/">
-                Meet my experience <ArrowUpRight size={18} />
+                View experience <ArrowUpRight size={18} />
               </Link>
               <Link className="text-link" href="/projects/">
                 Explore my work <ArrowRight size={17} />
@@ -105,7 +111,7 @@ export default function Home() {
               <span className="section-number">02</span>Selected work
             </p>
             <h2>
-              Ideas, put <em>into practice.</em>
+              Selected <em>projects.</em>
             </h2>
           </div>
           <Link className="text-link" href="/projects/">
@@ -113,8 +119,17 @@ export default function Home() {
           </Link>
         </div>
         <div className="project-grid">
-          {projects.slice(0, 3).map((project, index) => (
-            <ProjectCard key={project.slug} project={project} index={index} />
+          {[
+            "home-capital-studio",
+            "aerobox",
+            "push-quest",
+            "lung-cancer-data-science",
+          ].map((slug, index) => (
+            <ProjectCard
+              key={slug}
+              project={projects.find((project) => project.slug === slug)}
+              index={index}
+            />
           ))}
         </div>
       </section>
@@ -122,14 +137,15 @@ export default function Home() {
         <p className="eyebrow">Looking ahead</p>
         <div>
           <h2>
-            The next chapter starts
+            Technical understanding.
             <br />
-            with a conversation.
+            Commercial curiosity.
           </h2>
           <p>
-            Seeking a six-month final-year internship from January 2027, with a
-            particular interest in front-office banking, aviation and commercial
-            roles.
+            I am looking for an international team where I can contribute
+            through analysis, clear communication and a practical understanding
+            of products. My interests span finance, aviation and business
+            development.
           </p>
         </div>
         <a

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "./transition-link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Download, Menu, X } from "lucide-react";

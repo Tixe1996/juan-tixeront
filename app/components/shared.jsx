@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Download, ExternalLink } from "lucide-react";
+import Link from "./transition-link";
+import { ArrowRight, ArrowUpRight, Download, ExternalLink, Code2 } from "lucide-react";
 import { asset } from "../lib/content";
 
 export function PageIntro({ number, eyebrow, title, emphasis, children }) {
@@ -38,7 +38,10 @@ export function ProjectCard({ project, index = 0 }) {
       className={`project-card tone-${project.filter === "Finance" ? "green" : project.filter === "Data & ML" ? "blue" : "neutral"}`}
     >
       <Link href={`/projects/${project.slug}/`} className="project-card-link">
-        <div className="project-image">
+        <div
+          className="project-image"
+          style={{ viewTransitionName: `project-${project.slug}` }}
+        >
           <img
             src={asset(project.image)}
             alt={project.imageAlt}
@@ -49,6 +52,12 @@ export function ProjectCard({ project, index = 0 }) {
           <span className="project-open">
             <ArrowUpRight size={20} aria-hidden="true" />
           </span>
+          {(project.app || project.demo) && (
+            <span className="project-live">
+              <span className="status-dot" />
+              Interactive
+            </span>
+          )}
         </div>
         <div className="project-copy">
           <p className="project-category">
@@ -70,6 +79,16 @@ export function ProjectCard({ project, index = 0 }) {
 export function ProjectResources({ project }) {
   return (
     <div className="button-row">
+      {project.source && (
+        <a className="button primary" href={asset(project.source)} download>
+          Download Python study <Code2 size={17} />
+        </a>
+      )}
+      {project.demo && (
+        <Link className="button primary" href={project.demo}>
+          Try the live demo <ArrowUpRight size={17} />
+        </Link>
+      )}
       {project.app && (
         <a
           className="button primary"
@@ -119,9 +138,11 @@ export function ContactBand() {
     <section className="contact-band">
       <div className="wrap contact-band-inner">
         <div>
-          <p className="eyebrow">The next conversation</p>
-          <h2>Let’s connect the dots.</h2>
-          <p>Finance, aviation and client-facing opportunities.</p>
+          <p className="eyebrow">Available from January 2027</p>
+          <h2>Let’s talk.</h2>
+          <p>
+            Six-month internship · Analysis, business and client relationships.
+          </p>
         </div>
         <Link className="button light" href="/contact/">
           Get in touch <ArrowUpRight size={18} />

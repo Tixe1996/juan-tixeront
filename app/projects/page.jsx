@@ -3,7 +3,7 @@ import ProjectBrowser from "../components/project-browser";
 export const metadata = {
   title: "Projects",
   description:
-    "Ten projects in finance, aerospace, data science, numerical methods and strategy, with original reports and a live finance application.",
+    "Projects in finance, aerospace and data science, with live applications, interactive demos and original reports.",
 };
 export default function Projects() {
   return (
@@ -11,11 +11,11 @@ export default function Projects() {
       <PageIntro
         number="02"
         eyebrow="Project library"
-        title="The thinking is important."
-        emphasis="The work makes it real."
+        title="Projects"
+        emphasis="From analysis to application."
       >
-        Finance applications, aerospace studies and data science. A collection
-        of projects that turn analysis into something tangible.
+        Working applications, engineering designs and research. Explore the
+        problem, the decisions and the work behind each project.
       </PageIntro>
       <ProjectBrowser />
       <ContactBand />

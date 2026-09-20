@@ -41,6 +41,112 @@ export const projects = [
     note: "Personal modelling project. Projections depend on the assumptions entered and are not investment recommendations.",
   },
   {
+    slug: "aerobox",
+    title: "AéroBox",
+    category: "Product design & aerospace",
+    filter: "Aerospace",
+    type: "Academic CAD project · IPSA · May 2026",
+    summary:
+      "A configurable transport-drone concept, connecting mission requirements, parametric design and manufacturing decisions.",
+    image: "/assets/projects/aerobox.webp",
+    imageAlt:
+      "Original AéroBox CAD render showing the central fuselage, four motor arms and landing structure",
+    pdf: "/assets/downloads/aerobox-project-brief.pdf",
+    supportingPdf: "/assets/downloads/aerobox-manufacturing-report.pdf",
+    tools: [
+      "CATIA V5",
+      "Parametric CAD",
+      "Excel configurations",
+      "BOM",
+      "Manufacturing strategy",
+      "Product requirements",
+    ],
+    question:
+      "How can one drone architecture adapt to different delivery missions?",
+    approach:
+      "Developed with Matis Lebrun at IPSA, AéroBox explores a compact transport drone with a configurable CAD assembly. The concept brings together delivery-oriented requirements and an agile aircraft layout. Mission choices inform arm length, propeller geometry, payload protection and material options.",
+    takeaway:
+      "A product only becomes credible when the requirements, geometry and manufacturing choices agree. This project connects engineering detail with the practical questions behind a product: what it is for, how it can be made and what still needs validation.",
+    points: [
+      "Develop a parametric CATIA assembly and configuration matrix",
+      "Compare 16 design variants across arm length, blade count and material family",
+      "Document the bill of materials and proposed manufacturing processes",
+      "Define supplier scope and the checks needed before any physical flight testing",
+    ],
+    metrics: [
+      { value: "16", label: "Design configurations" },
+      { value: "2", label: "Material families" },
+      { value: "CAD", label: "Concept-stage deliverable" },
+    ],
+    note: "Academic concept co-developed by Jean Tixeront and Matis Lebrun, not a flight-tested aircraft. Mass, endurance, speed and payload performance remain unvalidated. Amazon and Red Bull are design references, not project partners or endorsers.",
+  },
+  {
+    slug: "push-quest",
+    title: "Push Quest",
+    category: "Computer vision & product development",
+    filter: "Data & ML",
+    type: "Personal project · Python desktop system & browser demo",
+    summary:
+      "A camera-based push-up counter exploring pose tracking, movement detection and clear feedback. Try the browser demo.",
+    image: "/assets/projects/push-quest.webp",
+    imageAlt:
+      "Push Quest browser demo with an explicitly simulated pose sequence and movement counter",
+    demo: "/projects/push-quest/demo/",
+    tools: [
+      "Python",
+      "MediaPipe",
+      "OpenCV",
+      "State machines",
+      "PySide6",
+      "JavaScript",
+      "Automated testing",
+    ],
+    question:
+      "How do you turn a noisy camera signal into a useful movement counter?",
+    approach:
+      "The original Python application combines pose estimation, a stable-plank gate and a temporal state machine. Its later desktop versions add session controls, identity checks and coaching feedback. The portfolio demo adapts the central movement-counting idea for the browser, with local camera or video processing and no account required.",
+    takeaway:
+      "Building the detector made evaluation as important as the interface. A count, a form assessment and an identity check are different claims, and each needs its own tests. The browser demo deliberately focuses on visible, explainable movement detection.",
+    points: [
+      "Track body landmarks and calculate joint angles with MediaPipe",
+      "Require a stable starting posture and a complete down-and-up cycle",
+      "Discard interrupted movements when the pose is lost",
+      "Separate software regression tests from real-world accuracy claims",
+    ],
+    metrics: [
+      { value: "94 + 56", label: "Desktop tests documented in V31" },
+      { value: "Local", label: "Browser video processing" },
+      { value: "Live", label: "Camera and video demo" },
+    ],
+    note: "Experimental movement demo, not a medical assessment or certified form judge. The browser version does not include the desktop classifier or facial verification. The V31 test counts refer to the documented desktop release, not to browser accuracy. No financial reward or official ranking should depend on its output.",
+  },
+  {
+    slug: "image-diffusion-numerical-methods",
+    title: "Images through equations",
+    category: "Image processing & numerical methods",
+    filter: "Computation",
+    type: "Academic Python study · MA327 · June 2025",
+    summary:
+      "Making differential equations visible: exploring image diffusion, texture and detail through Python experiments.",
+    image: "/assets/projects/image-math/seascape-exp.jpg",
+    imageAlt:
+      "Saved anisotropic-diffusion output from the MA327 Python study, applied to a seascape painting",
+    source: "/assets/downloads/ma327-python-study.zip",
+    tools: ["Python", "NumPy", "OpenCV", "scikit-image", "Runge-Kutta", "Finite differences", "Image diffusion"],
+    question: "What happens when an image becomes the initial condition of an equation?",
+    approach:
+      "The MA327 coursework moves from pendulum dynamics to image processing. RGB channels become numerical fields: a heat-equation model smooths a landscape, while gradient-based and anisotropic updates explore how texture and edges change. The Python files include RK2 and RK4 experiments, boundary handling and visual comparisons.",
+    takeaway:
+      "Images make numerical assumptions tangible. Changing the update rule or its parameters changes the result, so a convincing visual effect is only the beginning: stability, boundary conditions and implementation details still matter.",
+    points: [
+      "Implement RK2 and RK4 experiments for pendulum dynamics",
+      "Apply a finite-difference heat operator to separate RGB channels",
+      "Explore gradient-based processing and two anisotropic conduction functions",
+      "Compare original inputs with outputs saved alongside the Python code",
+    ],
+    note: "Academic numerical experiments, not a trained AI model or a validated restoration tool. The comparisons use saved project outputs, not a new execution of the code. Paintings and photographs are study inputs, not original artworks by Juan. The source archive retains the original scripts and their local-path assumptions.",
+  },
+  {
     slug: "lung-cancer-data-science",
     title: "Lung cancer data science",
     category: "Data science & machine learning",
@@ -299,6 +405,7 @@ export const filters = [
 
 export const experiences = [
   {
+    slug: "pld-space",
     company: "PLD Space",
     role: "Mechanical Engineering Intern",
     date: "Jun 2026 - present",
@@ -313,8 +420,13 @@ export const experiences = [
     relevance:
       "Technical requirements, supplier dialogue and purchasing decisions.",
     tags: ["MIURA 5", "Siemens NX", "Mechanical design", "Procurement"],
+    output:
+      "Mechanical component designs and support for manufacturing, assembly and procurement on MIURA 5.",
+    perspective:
+      "Working between design requirements and supplier constraints has shown me how technical choices affect purchasing and delivery. It is a practical foundation for discussing complex products with different stakeholders.",
   },
   {
+    slug: "fujifilm-sonosite",
     company: "Fujifilm Sonosite",
     role: "Logistics & Technical Support Intern",
     date: "Jul - Aug 2024",
@@ -328,8 +440,13 @@ export const experiences = [
     relevance:
       "Operational priorities, service quality and data-informed decisions.",
     tags: ["Python", "Machine learning", "Technical support", "Logistics"],
+    output:
+      "A Python model for prioritising inventory by repair, update and review needs, alongside ultrasound-system support.",
+    perspective:
+      "The challenge was to translate service and expiry deadlines into a useful order of priority. The experience connected data work with the operational needs of a technical-support team.",
   },
   {
+    slug: "black-and-blue",
     company: "Black & Blue",
     role: "Waiter / Bartender",
     date: "2023 - 2024",
@@ -343,8 +460,13 @@ export const experiences = [
     relevance:
       "Listening, customer relationships and clear communication under pressure.",
     tags: ["Customer service", "Teamwork", "International environment"],
+    output:
+      "Direct customer service and team coordination in an international restaurant and bar.",
+    perspective:
+      "Listening carefully, adapting to different customers and keeping communication clear during busy services are skills I want to carry into client-facing business roles.",
   },
   {
+    slug: "eurospacehub",
     company: "EuroSpaceHub Forum",
     role: "Event Logistics Volunteer",
     date: "May 2023",
@@ -356,8 +478,13 @@ export const experiences = [
     ],
     relevance: "Stakeholder coordination and professional event communication.",
     tags: ["Aerospace", "Event coordination", "Participant reception"],
+    output:
+      "Speaker coordination, participant reception and logistical support for an aerospace forum.",
+    perspective:
+      "Supporting a professional event reinforced the importance of preparation and clear communication when people with different expectations need to work together.",
   },
   {
+    slug: "alstom",
     company: "Alstom",
     role: "Observation Internship",
     date: "2019",
@@ -369,6 +496,10 @@ export const experiences = [
     ],
     relevance: "Understanding how technical work fits into an organisation.",
     tags: ["Industry", "Engineering operations"],
+    output:
+      "An observation placement introducing engineering operations and management processes.",
+    perspective:
+      "This early exposure helped me understand how individual engineering tasks fit into a wider industrial organisation.",
   },
 ];
 

@@ -8,6 +8,9 @@ const port = Number(process.env.PORT || 4173);
 const types = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript",
+  ".mjs": "text/javascript",
+  ".cjs": "text/javascript",
+  ".wasm": "application/wasm",
   ".css": "text/css",
   ".json": "application/json",
   ".txt": "text/plain",

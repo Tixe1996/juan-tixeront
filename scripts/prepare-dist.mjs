@@ -1,6 +1,7 @@
 import { cp, mkdir, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { prepareExport } from "./prepare-export.mjs";
 
 const root = process.cwd();
 const outDir = path.join(root, "out");
@@ -10,6 +11,7 @@ if (!existsSync(outDir)) {
   throw new Error("Expected Next static export folder 'out' to exist after build.");
 }
 
+await prepareExport(outDir);
 await rm(distDir, { recursive: true, force: true });
 await writeFile(path.join(outDir, ".nojekyll"), "", "utf8");
 await cp(outDir, distDir, { recursive: true });
