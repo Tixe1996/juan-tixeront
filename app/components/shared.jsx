@@ -73,7 +73,7 @@ export function ProjectResources({ project }) {
       {project.app && (
         <a
           className="button primary"
-          href={asset(project.app)}
+          href={project.app}
           target="_blank"
           rel="noreferrer"
         >

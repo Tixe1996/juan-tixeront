@@ -19,7 +19,7 @@ export const projects = [
     image: "/assets/projects/home-capital-studio.jpg",
     imageAlt:
       "The Home Capital Studio finance application with investment and property scenario inputs",
-    app: "/finance-app/index.html",
+    app: "https://home-capital-studio.web.app",
     tools: [
       "React",
       "TypeScript",
