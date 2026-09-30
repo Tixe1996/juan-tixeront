@@ -130,7 +130,7 @@ export default function SiteFrame({ children }) {
         <div className="wrap footer-inner">
           <Link className="footer-name" href="/">
             Juan Tixeront
-            <span>Engineering precision. Commercial curiosity.</span>
+            <span>Engineering precision. Scientific curiosity.</span>
           </Link>
           <div className="footer-links">
             <a href={`mailto:${profile.email}`}>

@@ -13,7 +13,7 @@ export default function ProfileAvatar() {
     </button>
     {origin && <DialogShell titleId="portrait-title" origin={origin} onClose={() => setOrigin(null)} className="portrait-dialog">
       <img src={asset("/assets/juan-tixeront-portrait.webp")} alt="Portrait of Juan Tixeront in his PLD Space T-shirt" width={1536} height={1024} />
-      <div className="portrait-dialog-caption"><h2 id="portrait-title">Juan Tixeront</h2><p>Engineering · Analysis · Business</p></div>
+      <div className="portrait-dialog-caption"><h2 id="portrait-title">Juan Tixeront</h2><p>Engineering · Aerospace · Computing</p></div>
     </DialogShell>}
   </>;
 }

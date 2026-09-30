@@ -5,7 +5,7 @@ import ContactOptions from "../components/contact-options";
 export const metadata = {
   title: "Contact",
   description:
-    "Contact Juan Tixeront about finance, aviation and commercial opportunities. Seeking a six-month final-year internship from January 2027.",
+    "Contact Juan Tixeront about engineering, aerospace, data and business opportunities. Seeking a six-month final-year internship from January 2027.",
 };
 export default function Contact() {
   return (
@@ -17,8 +17,8 @@ export default function Contact() {
         emphasis="Let’s explore the opportunity."
       >
         Available for a six-month final-year internship from January 2027. I
-        welcome conversations about analytical, commercial and client-facing
-        roles.
+        welcome conversations about engineering, aerospace and data-focused
+        roles, as well as opportunities connecting technology and business.
       </PageIntro>
       <section className="contact-layout wrap">
         <ContactOptions />

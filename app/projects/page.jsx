@@ -3,7 +3,7 @@ import ProjectBrowser from "../components/project-browser";
 export const metadata = {
   title: "Projects",
   description:
-    "Projects in finance, aerospace and data science, with live applications, interactive demos and original reports.",
+    "Projects in aerospace, scientific computing, data science and financial modelling, with live applications, interactive demos and original reports.",
 };
 export default function Projects() {
   return (

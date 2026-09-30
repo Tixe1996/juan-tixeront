@@ -39,10 +39,10 @@ export default function VideoHero() {
         onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => { setFailed(true); setPlaying(false); }} />
       <div className="film-overlay" />
       <div className="hero-film-copy wrap">
-        <p className="eyebrow"><span className="status-dot" />Engineering · Analysis · Business</p>
+        <p className="eyebrow"><span className="status-dot" />Engineering · Aerospace · Computing</p>
         <h1 id="hero-name">Juan <em>Tixeront.</em></h1>
-        <p className="hero-film-statement">Bridging engineering precision<br />with financial strategy.</p>
-        <p className="hero-film-description">An analytical mind. An international outlook.<br />Technical insight for business and client relationships.</p>
+        <p className="hero-film-statement">Engineering ideas.<br />From analysis to design.</p>
+        <p className="hero-film-description">Aerospace design, simulation and data.<br />An engineering mindset, open to business and finance.</p>
         <div className="film-availability"><CalendarDays size={16} /><span><strong>January 2027</strong> · Six-month final-year internship</span></div>
         <div className="button-row">
           <Link className="button primary" href="/projects/">Explore my work <ArrowUpRight size={18} /></Link>
@@ -58,9 +58,9 @@ export default function VideoHero() {
           {playing ? <Pause size={18} /> : <Play size={18} />}
         </button>
       </div>
-      <div className="hero-ticker" aria-label="Analysis, strategy, data, engineering">
+      <div className="hero-ticker" aria-label="Engineering, aerospace, simulation, data">
         <div className={`ticker-track${paused || reduced ? " is-paused" : ""}`} aria-hidden="true">
-          {[0, 1].map((group) => <div className="ticker-group" key={group}>{[0, 1, 2].map((copy) => <span key={copy}>Analysis <i>·</i> Strategy <i>·</i> Data <i>·</i> Engineering <i>·</i></span>)}</div>)}
+          {[0, 1].map((group) => <div className="ticker-group" key={group}>{[0, 1, 2].map((copy) => <span key={copy}>Engineering <i>·</i> Aerospace <i>·</i> Simulation <i>·</i> Data <i>·</i></span>)}</div>)}
         </div>
       </div>
     </section>

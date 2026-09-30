@@ -40,6 +40,11 @@ cycle. These are prototype heuristics, not certified biomechanics thresholds.
 Video is read from a camera stream or a local blob URL. No frames are uploaded.
 Stopping, navigating away or cancelling a pending permission request releases
 the stream and worker. Session JSON contains counts and provenance, not images.
+The muted video feed now starts before model loading. Camera access and video
+playback errors are reported separately; a playback rejection no longer falsely
+claims that camera permission was denied. A device selector and diagnostic error
+details support unavailable, busy and system-blocked cameras. Browser permission
+cannot override operating-system camera privacy settings.
 The simulation passes synthetic landmarks through the same geometry/counter
 pipeline but does not execute camera inference. It is labelled explicitly.
 
@@ -50,6 +55,13 @@ official rankings or financial rewards. Real-world accuracy needs separate study
 ## Verification
 
 - `node scripts/test-push-counter.mjs` tests the geometric state machine.
+- `node scripts/test-push-camera.cjs` runs Playwright integration tests against
+  `TEST_BASE` (default local preview on port 4176). Set `BROWSER_PATH` when using
+  an installed browser and make Playwright available in the Node environment.
+  It uses a synthetic canvas stream with the real local MediaPipe model, never
+  the physical webcam. It checks frame processing, pause/resume, track cleanup,
+  delayed permission cancellation, model failure and permission error handling.
+  These tests do not verify a particular user's hardware or OS permissions.
 - `python scripts/build-aerobox-brief.py` rebuilds the three-page English brief.
 - Browser QA covers routes, static resources, native navigation, reduced motion,
   responsive layouts, simulation, real local-video inference and camera cleanup.

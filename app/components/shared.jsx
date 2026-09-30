@@ -141,7 +141,7 @@ export function ContactBand() {
           <p className="eyebrow">Available from January 2027</p>
           <h2>Let’s talk.</h2>
           <p>
-            Six-month internship · Analysis, business and client relationships.
+            Six-month internship · Engineering, simulation and data analysis.
           </p>
         </div>
         <Link className="button light" href="/contact/">

@@ -10,7 +10,7 @@ import VideoHero from "./components/video-hero";
 import ProjectConstellation from "./components/project-constellation";
 import LiveLab from "./components/live-lab";
 
-const featuredProjects = ["home-capital-studio", "aerobox", "push-quest", "lung-cancer-data-science"].map((slug) => projects.find((project) => project.slug === slug));
+const featuredProjects = ["aerobox", "image-diffusion-numerical-methods", "push-quest", "home-capital-studio"].map((slug) => projects.find((project) => project.slug === slug));
 
 export default function Home() {
   return (
@@ -61,15 +61,15 @@ export default function Home() {
         <p className="eyebrow">Looking ahead</p>
         <div>
           <h2>
-            Technical understanding.
+            Engineering depth.
             <br />
-            Commercial curiosity.
+            An open perspective.
           </h2>
           <p>
-            I am looking for an international team where I can contribute
-            through analysis, clear communication and a practical understanding
-            of products. My interests span finance, aviation and business
-            development.
+            I am looking for an international team where I can contribute through
+            engineering, simulation and data analysis. I am particularly drawn to
+            aerospace and technical product development, while remaining curious
+            about finance, business decisions and customer-facing work.
           </p>
         </div>
         <a

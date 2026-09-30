@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeftRight, Image as ImageIcon } from "lucide-react";
+import { ArrowLeftRight, ArrowUpRight, Image as ImageIcon } from "lucide-react";
+import Link from "./transition-link";
 import { asset } from "../lib/content";
 
 const samples = [
   {
     name: "Seascape",
+    lab: "seascape",
     original: "seascape-original.jpg",
     outputs: [
       { name: "Exponential", file: "seascape-exp.jpg" },
@@ -16,12 +18,14 @@ const samples = [
   },
   {
     name: "Starry night",
+    lab: "starry",
     original: "starry-original.jpg",
     outputs: [],
     description: "An additional painting supplied with the original coursework. No corresponding processed output is stored in the project folder, so this image is presented as an input only.",
   },
   {
     name: "Open road",
+    lab: "road",
     original: "road-original.jpg",
     outputs: [{ name: "Heat diffusion", file: "road-heat.png" }],
     description: "The saved heat-equation result smooths high-frequency detail across the RGB channels. Road markings, cloud edges and fine texture illustrate the visual effect of diffusion.",
@@ -83,6 +87,7 @@ export default function ImageStudy() {
         </label>}
         <figcaption>{sample.description}</figcaption>
       </figure>
+      <Link className="text-link study-lab-link" href={`/?lab=${sample.lab}#live-lab`}>Run a new experiment <ArrowUpRight size={17} /></Link>
     </section>
   );
 }

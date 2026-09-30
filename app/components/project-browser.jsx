@@ -4,12 +4,15 @@ import { Search, X, RotateCcw } from "lucide-react";
 import { filters, projects } from "../lib/content";
 import ProjectConstellation from "./project-constellation";
 
+const disciplineOrder = ["Aerospace", "Computation", "Data & ML", "Strategy", "Finance"];
+const orderedProjects = [...projects].sort((a, b) => disciplineOrder.indexOf(a.filter) - disciplineOrder.indexOf(b.filter));
+
 export default function ProjectBrowser() {
   const [filter, setFilter] = useState("All");
   const [query, setQuery] = useState("");
   const matches = useMemo(
     () =>
-      projects.filter(
+      orderedProjects.filter(
         (project) =>
           (filter === "All" || project.filter === filter) &&
           `${project.title} ${project.summary} ${project.tools.join(" ")}`

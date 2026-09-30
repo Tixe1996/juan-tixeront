@@ -56,6 +56,20 @@ body { background: var(--surface); }
 .studio-tools [aria-pressed="true"] { background: #294235; }
 .camera-feedback, .camera-loading { color: #17402e; }
 .camera-loading .loader { border-color: #bbcdc2; border-top-color: #17402e; }
+.camera-loading.feed-ready { inset: 16px 16px auto auto; max-width: calc(100% - 32px); padding: 12px 16px; border: 1px solid #bbcdc2; border-radius: 4px; }
+.camera-device-row { display: flex; align-items: center; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--line); background: var(--soft); font-size: 12px; }
+.camera-device-row select { min-width: 0; max-width: 380px; flex: 1; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 9px 12px; font: inherit; }
+.camera-device-row select:disabled { opacity: .6; }
+.studio-error p { margin: 0; overflow-wrap: anywhere; }
+.studio-error details { margin-top: 8px; }
+.studio-error summary { cursor: pointer; font-size: 12px; }
+.studio-error details p { margin-top: 6px; font-size: 11px; }
+@media (max-width: 500px) {
+  .camera-device-row { display: grid; grid-template-columns: 16px minmax(0, 1fr) 40px; gap: 8px; }
+  .camera-device-row label { grid-column: 2 / 4; }
+  .camera-device-row select { grid-column: 1 / 3; max-width: none; width: 100%; }
+  .camera-device-row button { grid-column: 3; }
+}
 .phase-meter { background: #38483f; }
 
 /* Full-bleed film with the next section visible below the first viewport. */
@@ -177,6 +191,41 @@ body { background: var(--surface); }
 .lab-footer { display: flex; justify-content: space-between; align-items: flex-start; gap: 30px; margin-top: 18px; }
 .lab-footer p { color: var(--muted); max-width: 640px; font-size: 11px; line-height: 1.8; }
 .lab-footer .text-link { flex-shrink: 0; font-size: 12px; }
+.study-lab-link { margin-top: 15px; }
+.lab-sample { display: flex; align-items: center; gap: 13px; color: var(--muted); font-size: 11px; }
+.lab-sample select { min-width: 164px; padding: 10px 30px 10px 12px; border: 1px solid #50645a; background: #19251f; color: var(--ink); border-radius: 3px; font-size: 12px; }
+.numerical-lab .lab-visual { min-height: 470px; }
+.numerical-lab .lab-input-photo, .numerical-lab .lab-output { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 52px 18px 66px; }
+.lab-visual-tools { position: absolute; right: 17px; bottom: 15px; display: flex; gap: 6px; }
+.lab-visual-tools .icon-button { border: 1px solid var(--line); background: #1a2822; color: var(--ink); }
+.lab-visual-tools [aria-pressed="true"] { color: var(--green); border-color: var(--green); }
+.lab-load-state { position: absolute; left: 18px; bottom: 26px; font-size: 11px; color: var(--muted); }
+.lab-equation { font: 23px/1.4 var(--serif); color: #c3dfec; margin: 17px 0 18px; }
+.lab-code { white-space: pre-wrap; overflow-wrap: anywhere; font: 11px/1.9 Consolas, monospace; color: #b8ddc6; margin: 0; min-height: 105px; }
+.lab-code code { font: inherit; }
+.lab-readouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px 20px; margin: 22px 0 5px; border-top: 1px solid var(--line); padding-top: 18px; }
+.lab-readouts dt { font-size: 9px; color: var(--muted); }
+.lab-readouts dd { font-size: 12px; color: var(--ink); margin: 3px 0 0; font-variant-numeric: tabular-nums; }
+.numerical-lab .terminal-body { padding-bottom: 20px; }
+.numerical-lab .lab-playback input { width: 100%; height: 18px; margin: 10px 0 0; accent-color: var(--green); cursor: ew-resize; }
+.numerical-lab .lab-footer p { max-width: 790px; }
+.numerical-lab .lab-image-error { top: 30%; z-index: 2; border: 1px solid #876447; }
+.numerical-lab .lab-image-error .text-link { margin-top: 12px; color: var(--ink); }
+@media (max-width: 900px) {
+  .numerical-lab .lab-toolbar { flex-wrap: wrap; }
+  .numerical-lab .lab-visual { min-height: 390px; }
+}
+@media (max-width: 600px) {
+  .numerical-lab .lab-toolbar { flex-direction: column; align-items: stretch; gap: 16px; }
+  .lab-sample select { flex: 1; min-width: 0; }
+  .lab-models { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lab-models button { flex-direction: column; gap: 6px; font-size: 10px; padding: 10px 4px; }
+  .numerical-lab .lab-visual { min-height: 330px; }
+  .numerical-lab .lab-input-photo, .numerical-lab .lab-output { padding: 44px 12px 63px; }
+  .lab-equation { font-size: 22px; }
+  .lab-code { font-size: 10px; }
+  .lab-load-state { left: 12px; font-size: 9px; }
+}
 
 @media (max-width: 1100px) {
   .header-inner { gap: 15px; }

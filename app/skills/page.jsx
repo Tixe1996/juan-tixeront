@@ -24,6 +24,8 @@ const icons = {
   chart: ChartNoAxesCombined,
   code: Code2,
 };
+const skillOrder = ["plane", "chart", "data", "code", "finance", "people"];
+const orderedSkills = skillOrder.map((icon) => skills.find((group) => group.icon === icon));
 export default function Skills() {
   return (
     <>
@@ -31,13 +33,13 @@ export default function Skills() {
         number="03"
         eyebrow="Expertise"
         title="Technical depth."
-        emphasis="Commercial relevance."
+        emphasis="Practical applications."
       >
         A toolkit built through engineering studies, practical projects and
         international work, with examples of how I use each skill.
       </PageIntro>
       <section className="wrap skill-grid">
-        {skills.map((group, index) => {
+        {orderedSkills.map((group, index) => {
           const Icon = icons[group.icon];
           return (
             <article className="skill-group" key={group.title} data-reveal>

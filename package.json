@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build && node scripts/prepare-dist.mjs",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack && node scripts/prepare-dist.mjs",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@mediapipe/tasks-vision": "0.10.32",
+    "fft.js": "4.0.4",
     "lucide-react": "1.24.0",
     "matter-js": "0.20.0",
     "next": "16.2.10",

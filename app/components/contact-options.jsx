@@ -11,8 +11,9 @@ import {
 import { asset, profile } from "../lib/content";
 
 const topics = [
+  "Engineering & aerospace",
+  "Simulation & data science",
   "Banking & finance",
-  "Aviation & aerospace",
   "Sales & business development",
   "Other opportunities",
 ];

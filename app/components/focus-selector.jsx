@@ -5,41 +5,39 @@ import {
   ArrowUpRight,
   ChartNoAxesCombined,
   Plane,
-  Handshake,
+  BrainCircuit,
 } from "lucide-react";
 
 const directions = [
   {
-    label: "Banking & finance",
+    label: "Engineering & aerospace",
+    Icon: Plane,
+    title: "From a physical problem to an engineered solution.",
+    text: "My foundation is aeronautical engineering: understanding systems, developing mechanical designs and testing assumptions through simulation. I enjoy connecting numerical analysis with practical design decisions.",
+    detail: "PLD Space: mechanical design for MIURA 5, alongside technical selection, procurement and supplier coordination.",
+    href: "/experience/pld-space/",
+    link: "Explore my engineering experience",
+    color: "blue",
+  },
+  {
+    label: "Simulation & data",
+    Icon: BrainCircuit,
+    title: "Turn mathematical models into something you can inspect.",
+    text: "From differential equations and image processing to computer vision and machine learning, I build experiments that make assumptions, outputs and limitations visible.",
+    detail: "MA327 image experiments, the Push Quest movement detector and an academic lung cancer data-science study.",
+    href: "/projects/image-diffusion-numerical-methods/",
+    link: "Explore numerical methods",
+    color: "green",
+  },
+  {
+    label: "Business & finance",
     Icon: ChartNoAxesCombined,
     title: "Turning analysis into informed decisions.",
-    text: "Engineering has taught me to test assumptions and explain complex ideas clearly. I want to apply that discipline in finance, combining quantitative work with an understanding of clients and their objectives.",
+    text: "I also enjoy applying an engineer’s analytical discipline to financial decisions, technical sales and product strategy. Quantitative thinking is most useful when the reasoning is clear and the assumptions can be challenged.",
     detail:
       "Home Capital Studio: an interactive application comparing investing, property and long-term capital decisions.",
     href: "/projects/home-capital-studio/",
     link: "Explore the finance project",
-    color: "green",
-  },
-  {
-    label: "Aviation & aerospace",
-    Icon: Plane,
-    title: "Technical understanding that informs commercial decisions.",
-    text: "I want to bring an engineer’s understanding of products and systems into aviation business development, technical sales and customer-facing teams.",
-    detail:
-      "PLD Space: mechanical design for MIURA 5, alongside procurement, technical selection and supplier coordination.",
-    href: "/experience/",
-    link: "Explore my experience",
-    color: "blue",
-  },
-  {
-    label: "Sales & relationships",
-    Icon: Handshake,
-    title: "Listen carefully. Understand the detail. Build the relationship.",
-    text: "I’m drawn to commercial roles where product knowledge and genuine attention to people belong together. I bring customer-facing experience, international teamwork and a technical foundation.",
-    detail:
-      "Customer service in Amsterdam, aerospace event coordination in Ibiza, and supplier dialogue in Alicante.",
-    href: "/experience/",
-    link: "See the experience behind it",
     color: "coral",
   },
 ];
@@ -67,9 +65,9 @@ export default function FocusSelector() {
             <span className="section-number">01</span>Professional direction
           </p>
           <h2>
-            An engineering background.
+            Engineering at the core.
             <br />
-            <em>A business perspective.</em>
+            <em>Curiosity beyond it.</em>
           </h2>
         </div>
         <p className="section-aside">

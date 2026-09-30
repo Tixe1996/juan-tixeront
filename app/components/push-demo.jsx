@@ -101,18 +101,32 @@ export default function PushDemo() {
     source: "demo",
     busy: false,
     rejectReady: null,
+    frameTimeout: null,
   });
   const [mode, setMode] = useState("idle");
   const [loading, setLoading] = useState(false);
   const [paused, setPaused] = useState(false);
   const [mirrored, setMirrored] = useState(false);
   const [error, setError] = useState("");
+  const [errorDetail, setErrorDetail] = useState("");
+  const [stage, setStage] = useState("");
+  const [feedReady, setFeedReady] = useState(false);
+  const [cameras, setCameras] = useState([]);
+  const [cameraId, setCameraId] = useState("");
   const [result, setResult] = useState(engine.current.snapshot());
+
+  async function refreshCameras() {
+    try {
+      const devices = await navigator.mediaDevices?.enumerateDevices();
+      setCameras((devices || []).filter((device) => device.kind === "videoinput" && device.deviceId));
+    } catch { /* Device labels may remain private until permission is granted. */ }
+  }
 
   function cleanup() {
     const s = session.current;
     s.generation++;
     cancelAnimationFrame(s.frame);
+    clearTimeout(s.frameTimeout);
     s.rejectReady?.(new Error("Session cancelled"));
     s.rejectReady = null;
     s.worker?.terminate();
@@ -134,13 +148,19 @@ export default function PushDemo() {
 
   useEffect(() => {
     drawPose(canvas.current, demoPose(0), true);
-    return cleanup;
+    refreshCameras();
+    navigator.mediaDevices?.addEventListener("devicechange", refreshCameras);
+    return () => {
+      navigator.mediaDevices?.removeEventListener("devicechange", refreshCameras);
+      cleanup();
+    };
   }, []);
 
   function finish(message) {
     cleanup();
     setMode("idle");
     setLoading(false);
+    setFeedReady(false);
     setPaused(false);
     engine.current.release();
     setResult(engine.current.snapshot(message || "Session ended"));
@@ -164,7 +184,9 @@ export default function PushDemo() {
     cleanup();
     engine.current.reset();
     setError("");
+    setErrorDetail("");
     setLoading(false);
+    setFeedReady(false);
     setPaused(false);
     const s = session.current,
       generation = s.generation;
@@ -190,75 +212,100 @@ export default function PushDemo() {
   async function start(source, file) {
     cleanup();
     engine.current.reset();
-    setResult(engine.current.snapshot("Loading pose model"));
+    setResult(engine.current.snapshot(source === "camera" ? "Waiting for camera access" : "Opening video"));
     setError("");
+    setErrorDetail("");
     setLoading(true);
+    setFeedReady(false);
+    setStage(source === "camera" ? "Waiting for camera permission…" : "Opening video…");
     setPaused(false);
     setMode(source);
     const s = session.current,
       generation = s.generation;
     s.mode = source;
     s.source = source;
-    let frameTimeout;
+    let startupPhase = source === "camera" ? "camera access" : "video playback";
+    const waitForReady = (setup, message, duration = 45000) => new Promise((resolve, reject) => {
+      const complete = (error) => {
+        clearTimeout(timeout);
+        if (s.rejectReady === complete) s.rejectReady = null;
+        if (error) reject(error); else resolve();
+      };
+      const timeout = setTimeout(() => complete(new Error(message)), duration);
+      s.rejectReady = complete;
+      try { setup(() => complete(), complete); } catch (error) { complete(error); }
+    });
     try {
       if (source === "camera") {
         if (!navigator.mediaDevices?.getUserMedia)
           throw new Error(
             "Camera access is unavailable. Use HTTPS and a browser with camera support, or choose a video.",
           );
-        const stream = await navigator.mediaDevices.getUserMedia({
+        const constraints = {
           video: {
-            width: { ideal: 960 },
-            height: { ideal: 600 },
-            facingMode: "user",
+            width: { ideal: 640 },
+            height: { ideal: 480 },
+            ...(cameraId ? { deviceId: { exact: cameraId } } : { facingMode: { ideal: "user" } }),
           },
           audio: false,
-        });
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         if (generation !== s.generation) {
           stream.getTracks().forEach((track) => track.stop());
           return;
         }
         s.stream = stream;
         video.current.srcObject = stream;
+        refreshCameras();
         stream.getVideoTracks()[0].addEventListener("ended", () => {
-          if (generation === s.generation) finish("Camera disconnected");
+          if (generation === s.generation) {
+            finish("Camera disconnected");
+            setError("The camera disconnected. Select another camera or reconnect it, then try again.");
+          }
         });
       } else {
         if (!file) throw new Error("Choose a video file.");
         s.url = URL.createObjectURL(file);
         video.current.src = s.url;
       }
+      // Start the feed before loading WASM; model startup must not hide camera failures.
+      startupPhase = "video playback";
+      setStage(source === "camera" ? "Starting camera…" : "Starting video…");
+      drawPose(canvas.current, null, false);
+      video.current.muted = true;
+      video.current.defaultMuted = true;
+      video.current.playsInline = true;
+      await waitForReady((resolve, reject) => {
+        video.current.play().then(resolve, reject);
+      }, "The video did not start. Check your camera's privacy shutter or choose a different camera.", 15000);
+      if (generation !== s.generation) return;
+      if (source === "camera" && !s.stream.getVideoTracks().some((track) => track.readyState === "live"))
+        throw new Error("The camera stopped before sending video. Select another camera and try again.");
+      if (source === "file") {
+        video.current.pause();
+        video.current.currentTime = 0;
+      }
+      setFeedReady(true);
+      startupPhase = "pose model";
+      setStage("Loading pose model…");
+      setResult(engine.current.snapshot("Loading pose model"));
       const worker = new Worker(asset("/push-quest/pose-worker.js"));
       s.worker = worker;
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(
-          () =>
-            reject(
-              new Error("The model took too long to load. Please try again."),
-            ),
-          45000,
-        );
-        const fail = (error) => {
-          clearTimeout(timeout);
-          reject(error);
-        };
-        s.rejectReady = fail;
+      await waitForReady((resolve, reject) => {
         worker.onerror = () =>
-          fail(
+          reject(
             new Error(
               "The pose model could not start. Try a recent Chrome, Edge or Safari browser.",
             ),
           );
         worker.onmessage = ({ data }) => {
           if (data.type === "ready") {
-            clearTimeout(timeout);
-            s.rejectReady = null;
             resolve();
           }
-          if (data.type === "error") fail(new Error(data.message));
+          if (data.type === "error") reject(new Error(data.message));
         };
         worker.postMessage({ type: "init" });
-      });
+      }, "The pose model took too long to load. Check your connection and try again.");
       if (generation !== s.generation) return;
       worker.onerror = () => {
         if (generation === s.generation) {
@@ -269,7 +316,7 @@ export default function PushDemo() {
         }
       };
       worker.onmessage = ({ data }) => {
-        clearTimeout(frameTimeout);
+        clearTimeout(s.frameTimeout);
         s.busy = false;
         if (generation !== s.generation || s.paused) return;
         if (data.type === "error") {
@@ -282,7 +329,10 @@ export default function PushDemo() {
         if (data.type === "pose")
           process(data.landmarks, data.timestamp, false, data.multiple);
       };
-      await video.current.play();
+      if (source === "file") {
+        startupPhase = "video playback";
+        await video.current.play();
+      }
       if (generation !== s.generation) return;
       setLoading(false);
       let lastFrame = -1,
@@ -325,7 +375,7 @@ export default function PushDemo() {
                 },
                 [bitmap],
               );
-              frameTimeout = setTimeout(() => {
+              s.frameTimeout = setTimeout(() => {
                 if (generation === s.generation) {
                   finish();
                   setError("Video processing timed out. Please restart.");
@@ -347,14 +397,21 @@ export default function PushDemo() {
     } catch (cause) {
       if (generation !== s.generation) return;
       finish();
+      setErrorDetail(`${startupPhase}: ${cause.name || "Error"}${cause.message ? ": " + cause.message : ""}`);
       setError(
         cause.name === "NotAllowedError"
-          ? "Camera permission was not granted. You can allow it in your browser or choose a local video instead."
+          ? startupPhase === "video playback"
+            ? "Camera permission may already be granted, but this browser blocked video playback. Try again or open this page directly in Chrome or Edge."
+            : /system/i.test(cause.message)
+              ? "The operating system blocked the camera, even if browser permission was granted. In Windows Settings > Privacy & security > Camera, enable camera access for desktop apps, then try again."
+              : "Camera access was blocked. Check this site's camera permission and Windows Settings > Privacy & security > Camera > Let desktop apps access your camera. Then try again in Chrome or Edge."
           : cause.name === "NotFoundError"
             ? "No camera was found. You can still analyse a local video or play the demo sequence."
             : cause.name === "NotReadableError"
-              ? "The camera is busy or unavailable. Close other camera apps and try again."
-              : cause.message,
+              ? "The camera is busy or unavailable. Close other camera apps, check system camera permissions, or select another camera."
+              : cause.name === "OverconstrainedError"
+                ? "The selected camera is no longer available. Choose Default camera or another device."
+                : cause.message,
       );
     }
   }
@@ -429,6 +486,7 @@ export default function PushDemo() {
               ref={video}
               muted
               playsInline
+              autoPlay
               aria-label="Local video feed"
               onError={() => {
                 if (session.current.mode === "file") {
@@ -460,11 +518,9 @@ export default function PushDemo() {
               : "LOCAL PROCESSING"}
           </div>
           {loading && (
-            <div className="camera-loading">
+            <div className={`camera-loading${feedReady ? " feed-ready" : ""}`}>
               <span className="loader" />
-              {mode === "camera"
-                ? "Preparing camera and pose model…"
-                : "Preparing video and pose model…"}
+              <span role="status">{stage}</span>
             </div>
           )}
           <div className="camera-feedback" role="status">
@@ -509,11 +565,20 @@ export default function PushDemo() {
             />
           </div>
           <p className="studio-limit">
-            Experimental counter.
+            Experimental counter.{" "}
             <br />
             Not a form certification.
           </p>
         </aside>
+      </div>
+      <div className="camera-device-row">
+        <Camera size={16} aria-hidden="true" />
+        <label htmlFor="camera-device">Camera</label>
+        <select id="camera-device" value={cameraId} disabled={active} onChange={(event) => setCameraId(event.target.value)}>
+          <option value="">Default camera</option>
+          {cameras.map((device, index) => <option key={device.deviceId} value={device.deviceId}>{device.label || `Camera ${index + 1}`}</option>)}
+        </select>
+        <button className="icon-button" type="button" title="Refresh cameras" aria-label="Refresh cameras" disabled={active} onClick={refreshCameras}><RotateCcw size={16} /></button>
       </div>
       <div className="studio-toolbar">
         {!active ? (
@@ -595,9 +660,10 @@ export default function PushDemo() {
         />
       </div>
       {error && (
-        <p className="studio-error" role="alert">
-          {error}
-        </p>
+        <div className="studio-error" role="alert">
+          <p>{error}</p>
+          {errorDetail && <details><summary>Technical details</summary><p>{errorDetail}</p></details>}
+        </div>
       )}
       <p className="studio-privacy">
         Camera and video frames stay in this browser. No recording, upload or

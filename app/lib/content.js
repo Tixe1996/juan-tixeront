@@ -128,9 +128,9 @@ export const projects = [
     type: "Academic Python study · MA327 · June 2025",
     summary:
       "Making differential equations visible: exploring image diffusion, texture and detail through Python experiments.",
-    image: "/assets/projects/image-math/seascape-exp.jpg",
+    image: "/assets/projects/image-math/strawberry-original.jpg",
     imageAlt:
-      "Saved anisotropic-diffusion output from the MA327 Python study, applied to a seascape painting",
+      "Original strawberry photograph used in the MA327 image-processing experiments",
     source: "/assets/downloads/ma327-python-study.zip",
     tools: ["Python", "NumPy", "OpenCV", "scikit-image", "Runge-Kutta", "Finite differences", "Image diffusion"],
     question: "What happens when an image becomes the initial condition of an equation?",
@@ -142,9 +142,9 @@ export const projects = [
       "Implement RK2 and RK4 experiments for pendulum dynamics",
       "Apply a finite-difference heat operator to separate RGB channels",
       "Explore gradient-based processing and two anisotropic conduction functions",
-      "Compare original inputs with outputs saved alongside the Python code",
+      "Compare original inputs with saved outputs and explore a nonlinear Schrödinger image effect",
     ],
-    note: "Academic numerical experiments, not a trained AI model or a validated restoration tool. The comparisons use saved project outputs, not a new execution of the code. Paintings and photographs are study inputs, not original artworks by Juan. The source archive retains the original scripts and their local-path assumptions.",
+    note: "Academic numerical experiments, not a trained AI model or a validated restoration tool. The comparison gallery uses saved project outputs. The separate Live Lab computes new browser adaptations with periodic boundaries and a split-step Fourier scheme for Schrödinger, rather than reproducing the original Python solver. Paintings and photographs are study inputs, not original artworks by Juan. The source archive retains the original scripts and their local-path assumptions.",
   },
   {
     slug: "lung-cancer-data-science",

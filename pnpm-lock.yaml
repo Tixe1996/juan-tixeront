@@ -11,6 +11,9 @@ importers:
       '@mediapipe/tasks-vision':
         specifier: 0.10.32
         version: 0.10.32
+      fft.js:
+        specifier: 4.0.4
+        version: 4.0.4
       lucide-react:
         specifier: 1.24.0
         version: 1.24.0(react@19.2.7)
@@ -261,6 +264,9 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
+  fft.js@4.0.4:
+    resolution: {integrity: sha512-f9c00hphOgeQTlDyavwTtu6RiK8AIFjD6+jvXkNkpeQ7rirK3uFWVpalkoS4LAwbdX7mfZ8aoBfFVQX1Re/8aw==}
+
   lucide-react@1.24.0:
     resolution: {integrity: sha512-YT6mBD8lGKkg4nM39enlm94/sfJIiW0YKUT60fBy4YK8tai31ylg1VhGNWxkpSKHo9UagfnZqwIff3HTDQwXeA==}
     peerDependencies:
@@ -487,6 +493,8 @@ snapshots:
 
   detect-libc@2.1.2:
     optional: true
+
+  fft.js@4.0.4: {}
 
   lucide-react@1.24.0(react@19.2.7):
     dependencies:
