@@ -5,11 +5,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Download, Menu, X } from "lucide-react";
 import { asset, profile } from "../lib/content";
+import ProfileAvatar from "./profile-avatar";
 
 const navigation = [
   ["/", "Overview"],
   ["/experience/", "Experience"],
   ["/projects/", "Projects"],
+  ["/#live-lab", "Live Lab"],
   ["/skills/", "Expertise"],
   ["/contact/", "Contact"],
 ];
@@ -118,6 +120,7 @@ export default function SiteFrame({ children }) {
           >
             {menuOpen ? <X size={23} /> : <Menu size={23} />}
           </button>
+          <ProfileAvatar />
         </div>
       </header>
       <main id="main" tabIndex={-1}>

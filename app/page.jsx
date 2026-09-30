@@ -1,85 +1,21 @@
 import Link from "./components/transition-link";
 import {
-  ArrowDown,
-  ArrowRight,
   ArrowUpRight,
   Download,
-  Globe2,
-  CalendarDays,
 } from "lucide-react";
 import { asset, profile, projects } from "./lib/content";
-import { ContactBand, ProjectCard } from "./components/shared";
+import { ContactBand } from "./components/shared";
 import FocusSelector from "./components/focus-selector";
+import VideoHero from "./components/video-hero";
+import ProjectConstellation from "./components/project-constellation";
+import LiveLab from "./components/live-lab";
+
+const featuredProjects = ["home-capital-studio", "aerobox", "push-quest", "lung-cancer-data-science"].map((slug) => projects.find((project) => project.slug === slug));
 
 export default function Home() {
   return (
     <>
-      <section className="hero">
-        <div className="hero-inner wrap">
-          <img
-            className="hero-portrait"
-            src={asset("/assets/juan-tixeront-portrait.webp")}
-            alt="Juan Tixeront, wearing his PLD Space T-shirt"
-            width={1536}
-            height={1024}
-            fetchPriority="high"
-          />
-          <div className="hero-copy">
-            <p className="eyebrow hero-eyebrow">
-              <span className="status-dot" />
-              Engineering · Analysis · Business
-            </p>
-            <h1>
-              Juan
-              <br />
-              <em>
-                Tixeront<span>.</span>
-              </em>
-            </h1>
-            <p className="hero-tagline">
-              An analytical mind.
-              <br />A people-first approach.
-            </p>
-            <p className="hero-lede">
-              Franco-Spanish aeronautical engineering student bringing technical
-              insight to business decisions and client relationships.
-            </p>
-            <div className="hero-availability">
-              <CalendarDays size={17} aria-hidden="true" />
-              <span>
-                <strong>January 2027</strong> · Six-month final-year internship
-              </span>
-            </div>
-            <div className="button-row">
-              <Link className="button primary" href="/experience/">
-                View experience <ArrowUpRight size={18} />
-              </Link>
-              <Link className="text-link" href="/projects/">
-                Explore my work <ArrowRight size={17} />
-              </Link>
-            </div>
-            <div className="hero-location">
-              <Globe2 size={15} aria-hidden="true" />
-              <span>Franco-Spanish · International outlook</span>
-            </div>
-          </div>
-          <div className="portrait-caption">
-            <span className="caption-rule" />
-            <div>
-              <strong>Currently at PLD Space</strong>
-              <span>Mechanical engineering · MIURA 5</span>
-            </div>
-          </div>
-          <a
-            className="hero-scroll"
-            href="#direction"
-            aria-label="Explore professional direction"
-          >
-            <ArrowDown size={17} />
-            <span>Discover more</span>
-          </a>
-        </div>
-      </section>
+      <VideoHero />
       <div className="credentials-band" id="direction">
         <div className="wrap credentials-inner">
           <p>
@@ -118,21 +54,9 @@ export default function Home() {
             All {projects.length} projects <ArrowUpRight size={18} />
           </Link>
         </div>
-        <div className="project-grid">
-          {[
-            "home-capital-studio",
-            "aerobox",
-            "push-quest",
-            "lung-cancer-data-science",
-          ].map((slug, index) => (
-            <ProjectCard
-              key={slug}
-              project={projects.find((project) => project.slug === slug)}
-              index={index}
-            />
-          ))}
-        </div>
+        <ProjectConstellation items={featuredProjects} />
       </section>
+      <LiveLab />
       <section className="next-step wrap" data-reveal>
         <p className="eyebrow">Looking ahead</p>
         <div>

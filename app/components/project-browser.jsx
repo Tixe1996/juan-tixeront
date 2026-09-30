@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import { Search, X, RotateCcw } from "lucide-react";
 import { filters, projects } from "../lib/content";
-import { ProjectCard } from "./shared";
+import ProjectConstellation from "./project-constellation";
 
 export default function ProjectBrowser() {
   const [filter, setFilter] = useState("All");
@@ -71,15 +71,7 @@ export default function ProjectBrowser() {
         </span>
         <span>Applications, research & engineering</span>
       </div>
-      <div className="project-grid" key={`${filter}-${query}`}>
-        {matches.map((project) => (
-          <ProjectCard
-            key={project.slug}
-            project={project}
-            index={projects.indexOf(project)}
-          />
-        ))}
-      </div>
+      {matches.length > 0 && <ProjectConstellation items={matches} />}
       {!matches.length && (
         <div className="empty-state">
           <Search size={32} />

@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./consulting.css";
 import SiteFrame from "./components/site-frame";
 import { TransitionProvider } from "./components/transition-link";
 
